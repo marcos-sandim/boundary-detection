@@ -306,7 +306,7 @@ class SupportGrid:
 
             pt = self.points[ii]
 
-            neighbors = self.tree.query_radius(pt, r=2.0 * self.rho)[0]
+            neighbors = self.tree.query_radius(pt.reshape(1,-1), r=2.0 * self.rho)[0]
 
             centroid = np.sum(
                 self.points[neighbors], axis=0) / neighbors.shape[0]
@@ -316,7 +316,7 @@ class SupportGrid:
 
             viewpoint = pt + V * self.rho
 
-            neighbors = self.tree.query_radius(viewpoint, r=0.95 * self.rho)[0]
+            neighbors = self.tree.query_radius(viewpoint.reshape(1,-1), r=0.95 * self.rho)[0]
             if (neighbors.size == 0):
                 self.viewpoints.append(viewpoint)
 
@@ -333,7 +333,7 @@ class SupportGrid:
         Returns:
             A numpy array containing the boundary candidates around the viewpoint.
         """
-        return self.tree.query_radius(viewpoint, r=4.0 * self.rho)[0]
+        return self.tree.query_radius(viewpoint.reshape(1,-1), r=4.0 * self.rho)[0]
 
 
 def to_index_tuple(idx):
